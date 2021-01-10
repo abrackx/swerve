@@ -2,6 +2,17 @@ table! {
     file (id) {
         id -> Nullable<Int4>,
         name -> Text,
+        sort -> Int4,
+        created_at -> Timestamp,
+        modified_at -> Timestamp,
+    }
+}
+
+table! {
+    image (id) {
+        id -> Nullable<Int4>,
+        name -> Text,
+        sort -> Int4,
         created_at -> Timestamp,
         modified_at -> Timestamp,
     }
@@ -22,6 +33,14 @@ table! {
         id -> Nullable<Int4>,
         project_id -> Int4,
         file_id -> Int4,
+    }
+}
+
+table! {
+    project_image (id) {
+        id -> Nullable<Int4>,
+        project_id -> Int4,
+        image_id -> Int4,
     }
 }
 
@@ -61,6 +80,8 @@ table! {
 
 joinable!(project_file -> file (file_id));
 joinable!(project_file -> project (project_id));
+joinable!(project_image -> image (image_id));
+joinable!(project_image -> project (project_id));
 joinable!(project_tag -> project (project_id));
 joinable!(project_tag -> tag (tag_id));
 joinable!(user_project -> project (project_id));
@@ -68,8 +89,10 @@ joinable!(user_project -> users (user_id));
 
 allow_tables_to_appear_in_same_query!(
     file,
+    image,
     project,
     project_file,
+    project_image,
     project_tag,
     tag,
     user_project,

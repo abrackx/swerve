@@ -16,6 +16,15 @@ CREATE TABLE tag (
 CREATE TABLE file (
   id SERIAL NOT NULL PRIMARY KEY,
   name TEXT NOT NULL,
+  sort SERIAL NOT NULL,
+  created_at TIMESTAMP NOT NULL,
+  modified_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE image (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name TEXT NOT NULL,
+  sort SERIAL NOT NULL,
   created_at TIMESTAMP NOT NULL,
   modified_at TIMESTAMP NOT NULL
 );
@@ -36,6 +45,12 @@ CREATE TABLE project_file (
   id SERIAL NOT NULL PRIMARY KEY,
   project_id INTEGER REFERENCES project(id) NOT NULL,
   file_id INTEGER REFERENCES file(id) NOT NULL
+);
+
+CREATE TABLE project_image (
+  id SERIAL NOT NULL PRIMARY KEY,
+  project_id INTEGER REFERENCES project(id) NOT NULL,
+  image_id INTEGER REFERENCES image(id) NOT NULL
 );
 
 

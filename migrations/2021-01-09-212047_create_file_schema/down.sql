@@ -5,8 +5,12 @@ DROP TABLE project_tag;
 
 DROP TABLE project_file;
 
+DROP TABLE project_image;
+
 DROP TABLE project;
 
 DROP TABLE tag;
 
 DROP TABLE file;
+
+DROP TABLE image;
