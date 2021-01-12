@@ -1,6 +1,6 @@
 table! {
     file (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         name -> Text,
         sort -> Int4,
         created_at -> Timestamp,
@@ -10,7 +10,7 @@ table! {
 
 table! {
     image (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         name -> Text,
         sort -> Int4,
         created_at -> Timestamp,
@@ -20,7 +20,7 @@ table! {
 
 table! {
     project (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         name -> Text,
         description -> Text,
         created_at -> Timestamp,
@@ -30,7 +30,7 @@ table! {
 
 table! {
     project_file (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         project_id -> Int4,
         file_id -> Int4,
     }
@@ -38,7 +38,7 @@ table! {
 
 table! {
     project_image (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         project_id -> Int4,
         image_id -> Int4,
     }
@@ -46,7 +46,7 @@ table! {
 
 table! {
     project_tag (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         project_id -> Int4,
         tag_id -> Int4,
     }
@@ -54,7 +54,7 @@ table! {
 
 table! {
     tag (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         name -> Text,
         created_at -> Timestamp,
     }
@@ -62,7 +62,7 @@ table! {
 
 table! {
     user_project (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         user_id -> Int4,
         project_id -> Int4,
     }
@@ -70,7 +70,7 @@ table! {
 
 table! {
     users (id) {
-        id -> Nullable<Int4>,
+        id -> Int4,
         first_name -> Text,
         last_name -> Text,
         email -> Text,

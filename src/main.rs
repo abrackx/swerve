@@ -6,17 +6,21 @@ extern crate dotenv;
 extern crate env_logger;
 #[macro_use]
 extern crate log;
+extern crate serde;
+#[macro_use]
+extern crate serde_derive;
 
 use actix_web::{App, HttpServer};
 use actix_web::middleware::Logger;
 use diesel::pg::PgConnection;
 use diesel::r2d2::{self, ConnectionManager};
+use diesel::prelude::*;
 
 mod schema;
-mod models;
 mod auth;
 mod config;
 mod handlers;
+mod models;
 
 pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
 
