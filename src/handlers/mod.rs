@@ -36,7 +36,10 @@ pub async fn get_user_by_id(
         web::block(move || db_get_projects_by_user_id(db, user_id.into_inner()))
             .await
             .map(|user| HttpResponse::Ok().json(user))
-            .map_err(|_| HttpResponse::InternalServerError())?,
+            .map_err(|e| {
+                error!("{:?}", e);
+                HttpResponse::InternalServerError()
+            })?,
     )
 }
 
@@ -64,7 +67,7 @@ fn db_get_user_by_id(pool: web::Data<Pool>, user_id: i32) -> Result<User, diesel
 
 fn db_get_projects_by_user_id(pool: web::Data<Pool>, user_id: i32) -> Result<Project, diesel::result::Error> {
     let conn = &pool.get().unwrap();
-    let u: User = users::table.select(all_columns).first(conn).unwrap();
+    let u: User = users::table.find(user_id).get_result(conn)?;
     let x = UserProject::belonging_to(&u).select(user_project::id);
     project::table
         .filter(project::id.eq(any(x)))
