@@ -1,23 +1,16 @@
-use diesel::{
-    pg::PgConnection,
-    r2d2::{self, ConnectionManager},
-};
-
-embed_migrations!();
+use sqlx::{Error, PgConnection, Postgres, PgPool};
+use sqlx::migrate::Migrator;
+use sqlx::postgres::PgPoolOptions;
+pub type Pool = PgPool;
 
 pub type Connection = PgConnection;
-pub type Pool = r2d2::Pool<ConnectionManager<Connection>>;
 
-pub fn migrate_and_config_db(url: &str) -> Pool {
+pub async fn migrate_and_config_db(url: &str) -> Result<Pool, Error> {
     info!("Migrating database...");
-    let manager = ConnectionManager::<Connection>::new(url);
-    let pool = r2d2::Pool::builder()
-        .build(manager)
-        .expect("Failed to create pool.");
-    match embedded_migrations::run(&pool.get().expect("Could not connect to pool.")) {
-        Ok(()) => pool,
-        Err(e) => {
-            panic!("Failed to run migration: {:?}", e)
-        }
-    }
+    let migrations: Migrator = sqlx::migrate!();
+    let pool = PgPoolOptions::new()
+        .connect(url)
+        .await?;
+    migrations.run(&pool).await?;
+    Ok(pool)
 }

@@ -1,4 +1,12 @@
--- Your SQL goes here
+-- Add migration script here
+CREATE TABLE users (
+  id SERIAL NOT NULL PRIMARY KEY,
+  first_name TEXT NOT NULL,
+  last_name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL
+);
+
 CREATE TABLE project (
   id SERIAL NOT NULL PRIMARY KEY,
   name TEXT NOT NULL,
@@ -52,5 +60,3 @@ CREATE TABLE project_image (
   project_id INTEGER REFERENCES project(id) NOT NULL,
   image_id INTEGER REFERENCES image(id) NOT NULL
 );
-
-

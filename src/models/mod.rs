@@ -1,8 +1,5 @@
-use crate::schema::*;
-
 pub mod user;
 pub mod project;
-pub mod relations;
 
 //
 

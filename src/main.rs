@@ -1,7 +1,3 @@
-#[macro_use]
-extern crate diesel;
-#[macro_use]
-extern crate diesel_migrations;
 extern crate dotenv;
 extern crate env_logger;
 #[macro_use]
@@ -12,17 +8,12 @@ extern crate serde_derive;
 
 use actix_web::{App, HttpServer};
 use actix_web::middleware::Logger;
-use diesel::pg::PgConnection;
-use diesel::r2d2::{self, ConnectionManager};
-use diesel::prelude::*;
 
-mod schema;
 mod auth;
 mod config;
 mod handlers;
 mod models;
-
-pub type Pool = r2d2::Pool<ConnectionManager<PgConnection>>;
+mod errors;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -31,7 +22,9 @@ async fn main() -> std::io::Result<()> {
     env_logger::init();
     let database_url = std::env::var("DATABASE_URL")
         .expect("DATABASE_URL must be set");
-    let pool: Pool = config::migrate_and_config_db(&database_url);
+    let pool = config::migrate_and_config_db(&database_url)
+        .await
+        .expect("Error migrating database");
     HttpServer::new(move || {
         App::new()
             .wrap(Logger::default())
