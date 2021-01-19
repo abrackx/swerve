@@ -29,7 +29,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Logger::default())
             .data(pool.clone())
-            .configure(handlers::config_services)
+            .configure(handlers::init)
     })
         .bind("127.0.0.1:8888")?
         .run()

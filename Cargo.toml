@@ -7,6 +7,7 @@ edition = "2018"
 [dependencies]
 actix-web = "3"
 actix-service = "1.0.6"
+actix-multipart = "0.3"
 futures = "0.3.8"
 sqlx = { version = "0.4.1", features = [ "postgres", "runtime-actix-native-tls", "chrono" ] }
 async-std = { version = "1.6", features = [ "attributes" ] }
@@ -20,3 +21,6 @@ log = "0.4.11"
 jsonwebtoken = "7.2.0"
 reqwest = { version = "0.11", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
+thiserror = "1.0.20"
+anyhow = "1.0.32"
+sanitize-filename = "0.3.0"
