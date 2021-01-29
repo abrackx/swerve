@@ -1,9 +1,8 @@
-use sqlx::{Error, PgConnection, Postgres, PgPool};
+use sqlx::{Error, PgPool};
 use sqlx::migrate::Migrator;
 use sqlx::postgres::PgPoolOptions;
-pub type Pool = PgPool;
 
-pub type Connection = PgConnection;
+pub type Pool = PgPool;
 
 pub async fn migrate_and_config_db(url: &str) -> Result<Pool, Error> {
     info!("Migrating database...");
