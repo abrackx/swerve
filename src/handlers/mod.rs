@@ -1,5 +1,4 @@
 use actix_web::web::{scope, ServiceConfig};
-use crate::config::Pool;
 
 mod files;
 mod projects;

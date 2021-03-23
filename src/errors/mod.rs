@@ -1,7 +1,6 @@
+use actix_web::{HttpResponse, ResponseError};
+use actix_web::http::StatusCode;
 use sqlx::Error as SqlxError;
-use actix_web::{error, Error, HttpResponse, ResponseError};
-use actix_web::http::{StatusCode, header};
-use actix_web::dev::HttpResponseBuilder;
 use thiserror::Error;
 
 #[derive(Error, Debug)]
