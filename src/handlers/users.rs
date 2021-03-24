@@ -2,8 +2,8 @@ use actix_web::{error, Error, get, HttpResponse};
 use actix_web::web::{Data, Path};
 
 use crate::config::Pool;
-use crate::models::user::User;
 use crate::errors::ApiError;
+use crate::models::user::User;
 
 #[get("/users")]
 pub async fn get_users(db: Data<Pool>) -> Result<HttpResponse, Error> {

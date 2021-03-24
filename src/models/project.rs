@@ -1,8 +1,8 @@
 use actix_web::web::Data;
-use anyhow::Result;
 use chrono::NaiveDateTime;
 
 use crate::config::Pool;
+use sqlx::Error;
 
 #[derive(sqlx::FromRow, Serialize, Deserialize)]
 pub struct Project {
@@ -13,7 +13,7 @@ pub struct Project {
     pub modified_at: NaiveDateTime,
 }
 
-pub async fn get_project_by_uid(db: Data<Pool>, uid: i32) -> Result<Vec<Project>> {
+pub async fn get_project_by_uid(db: &Pool, uid: i32) -> Result<Vec<Project>, Error> {
     let res = sqlx::query_as::<_, Project>("
             SELECT projects.*
             FROM projects
@@ -21,7 +21,19 @@ pub async fn get_project_by_uid(db: Data<Pool>, uid: i32) -> Result<Vec<Project>
             WHERE user_projects.user_id = $1
     ")
         .bind(uid)
-        .fetch_all(db.get_ref())
+        .fetch_all(db)
+        .await?;
+    Ok(res)
+}
+
+pub async fn get_project_by_id(db: &Pool, project_id: i32) -> Result<Project, Error> {
+    let res = sqlx::query_as::<_, Project>("
+            SELECT projects.*
+            FROM projects
+            WHERE id = $1
+    ")
+        .bind(project_id)
+        .fetch_one(db)
         .await?;
     Ok(res)
 }
