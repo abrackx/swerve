@@ -1,5 +1,5 @@
-use actix_web::{HttpResponse, ResponseError};
 use actix_web::http::StatusCode;
+use actix_web::{HttpResponse, ResponseError};
 use sqlx::Error as SqlxError;
 use thiserror::Error;
 

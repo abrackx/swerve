@@ -8,4 +8,3 @@ pub struct File {
     pub created_at: NaiveDateTime,
     pub modified_at: NaiveDateTime,
 }
-

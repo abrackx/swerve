@@ -1,7 +1,7 @@
 use std::io::Write;
 
 use actix_multipart::Multipart;
-use actix_web::{Error, HttpResponse, post, web};
+use actix_web::{post, web, Error, HttpResponse};
 use futures::{StreamExt, TryStreamExt};
 
 #[post("/files/{file_id}")]

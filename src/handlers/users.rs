@@ -1,5 +1,5 @@
-use actix_web::{error, Error, get, HttpResponse};
 use actix_web::web::{Data, Path};
+use actix_web::{error, get, Error, HttpResponse};
 
 use crate::config::Pool;
 use crate::errors::ApiError;
@@ -16,9 +16,11 @@ pub async fn get_users(db: Data<Pool>) -> Result<HttpResponse, Error> {
 
 #[get("/users/{uid}")]
 pub async fn get_users_by_id(db: Data<Pool>, uid: Path<i32>) -> Result<HttpResponse, ApiError> {
-    Ok(sqlx::query_as::<_, User>("SELECT * FROM users WHERE id = $1")
-        .bind(&uid.into_inner())
-        .fetch_one(db.get_ref())
-        .await
-        .map(|user| HttpResponse::Ok().json(user))?)
+    Ok(
+        sqlx::query_as::<_, User>("SELECT * FROM users WHERE id = $1")
+            .bind(&uid.into_inner())
+            .fetch_one(db.get_ref())
+            .await
+            .map(|user| HttpResponse::Ok().json(user))?,
+    )
 }
