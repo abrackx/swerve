@@ -1,8 +1,7 @@
-use actix_web::web::Data;
 use chrono::NaiveDateTime;
+use sqlx::Error;
 
 use crate::config::Pool;
-use sqlx::Error;
 
 #[derive(sqlx::FromRow, Serialize, Deserialize)]
 pub struct Project {

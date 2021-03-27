@@ -1,4 +1,7 @@
+use actix_web::http::StatusCode;
 use actix_web::web::{scope, ServiceConfig};
+use actix_web::HttpResponse;
+use serde::Serialize;
 
 mod files;
 mod projects;
@@ -28,4 +31,8 @@ pub fn init(cfg: &mut ServiceConfig) {
             .service(projects::get_projects_by_id)
             .service(files::save_file),
     );
+}
+
+pub fn json_response<T: Serialize>(data: T, status: StatusCode) -> HttpResponse {
+    HttpResponse::build(status).json(data)
 }

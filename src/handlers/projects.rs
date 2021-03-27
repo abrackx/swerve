@@ -1,10 +1,11 @@
 use actix_web::web::{Data, Path};
-use actix_web::{error, get, Error, HttpResponse};
+use actix_web::{get, HttpResponse};
 use reqwest::StatusCode;
 
-use crate::config::{json_response, Pool};
+use crate::config::Pool;
 use crate::errors::ApiError;
-use crate::models::project::{get_project_by_id, get_project_by_uid, Project};
+use crate::handlers::json_response;
+use crate::models::project::{get_project_by_id, get_project_by_uid};
 
 #[get("/projects/users/{uid}")]
 pub async fn get_projects_by_uid(db: Data<Pool>, uid: Path<i32>) -> Result<HttpResponse, ApiError> {
