@@ -5,6 +5,7 @@ use serde::Serialize;
 
 mod files;
 mod projects;
+mod tags;
 mod users;
 
 pub fn init(cfg: &mut ServiceConfig) {
@@ -29,6 +30,7 @@ pub fn init(cfg: &mut ServiceConfig) {
             .service(users::get_users_by_id)
             .service(projects::get_projects_by_uid)
             .service(projects::get_projects_by_id)
+            .service(tags::get_tags)
             .service(files::save_file),
     );
 }
